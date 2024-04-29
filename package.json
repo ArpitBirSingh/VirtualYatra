@@ -19,6 +19,7 @@
   "homepage": "https://github.com/ArpitBirSingh/Indian-pilgrimages#readme",
   "dependencies": {
     "express": "^4.17.3",
+    "nodemon": "^3.1.0",
     "three": "^0.138.3"
   }
 }

@@ -5,6 +5,7 @@ const app = express();
 app.use('/scripts', express.static(path.join(__dirname, 'node_modules/three/build')));
 app.use('/scripts', express.static(path.join(__dirname, 'node_modules/three/examples/js/controls')));
 app.use('/scripts', express.static(path.join(__dirname, 'node_modules/three/examples/js/loaders')));
+app.use('/scripts', express.static(path.join(__dirname, 'node_modules/three/examples/js/libs')));
 app.use(express.static(path.join(__dirname,"src")));
 
 

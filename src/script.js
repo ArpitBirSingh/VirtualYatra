@@ -1,4 +1,8 @@
-let scene, camera, renderer, controls;
+
+const dracoLoader = new THREE.DRACOLoader();
+dracoLoader.setDecoderPath( '/scripts/draco/' );
+dracoLoader.preload();
+let scene, camera, renderer, controls, model, sphere;
 
 function init() {
   scene = new THREE.Scene();
@@ -10,63 +14,83 @@ function init() {
     1,
     5000
   );
-  camera.position.x = 0;
-  camera.position.y = 0;
-  camera.position.z = 140;
+  camera.position.set(0, 5, 100);
 
-  directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-  directionalLight.position.set(200, 0, 0);
-  directionalLight.castShadow = true;
-  scene.add(directionalLight);
-
-  directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-  directionalLight.position.set(-200, 0, 0);
-  directionalLight.castShadow = true;
-  scene.add(directionalLight);
-
-  directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-  directionalLight.position.set(0, 200, 0);
-  directionalLight.castShadow = true;
-  scene.add(directionalLight);
-
-  directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-  directionalLight.position.set(0, -200, 0);
-  directionalLight.castShadow = true;
-  scene.add(directionalLight);
-
-  directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-  directionalLight.position.set(0, 0, 200);
-  directionalLight.castShadow = true;
-  scene.add(directionalLight);
-
-  directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-  directionalLight.position.set(0, 0, -200);
-  directionalLight.castShadow = true;
-  scene.add(directionalLight);
+  addLights();
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
   controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.addEventListener("change", renderer);
 
   let loader = new THREE.GLTFLoader();
-  loader.load("scene.gltf", function (gltf) {
-    car = gltf.scene.children[0];
-    car.position.y = -25;
-    // car.position.x=-10;
-    car.scale.set(1.5, 1.5, 1.5);
-    car.rotation.z = (-30 / 180) * Math.PI;
-    scene.add(gltf.scene);
-    animate();
+  loader.setDRACOLoader(dracoLoader);
+
+  loader.load("model/modelDraco.gltf", function (gltf) {
+    console.log("hello");
+    console.log(gltf);
+    model = gltf.scene.children[0];
+    model.position.y = -19;
+    scene.add(model);
+
+    createSphere();
+
+    animate(); // Start animation loop
   });
+
+  document.addEventListener('mousemove', onDocumentMouseMove);
+  
 }
 
 function animate() {
-  car.rotation.z -= 0.01;
+  
+  if (model) {
+    model.rotation.z -= 0.001; // Adjust the rotation speed here (e.g., 0.001 radians per frame for slower rotation)
+  }
+
   renderer.render(scene, camera);
-  requestAnimationFrame(animate);
+
+  requestAnimationFrame(animate); // Request the next frame
+}
+
+function addLights() {
+  // Add directional lights
+  const positions = [
+    [200, 0, 0],
+    [-200, 0, 0],
+    [0, 200, 0],
+    [0, -200, 0],
+    [0, 0, 200],
+    [0, 0, -200]
+  ];
+
+  positions.forEach(pos => {
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
+    directionalLight.position.set(...pos);
+    directionalLight.castShadow = true;
+    scene.add(directionalLight);
+  });
+}
+
+function createSphere() {
+  const geometry = new THREE.SphereGeometry(200, 50, 50);
+  const material = new THREE.PointsMaterial({
+    color: 0xffffff,
+    size: 2
+  });
+
+  sphere = new THREE.Points(geometry, material);
+  scene.add(sphere);
+}
+
+function onDocumentMouseMove(event) {
+  if (sphere) {
+    const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+    const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+    sphere.rotation.y = mouseX * 0.25; 
+    sphere.rotation.x = mouseY * 0.25;
+  }
 }
 
 init();

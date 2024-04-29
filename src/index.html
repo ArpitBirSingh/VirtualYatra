@@ -4,16 +4,57 @@
 
     <meta charset=UTF-8 />
     <link rel="stylesheet" type="text/css" href="styles.css" />
-  </head>
-  <body>
-    <div class="mainContent">
-      <h1>hello heree comes the any content</h1>
-      <h2>anything you want to add anything</h2>
-    </div>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/scripts/three.min.js" defer></script>
+    <script src="/scripts/GLTFLoader.js" defer></script>
+    <script src="/scripts/DRACOLoader.js" defer></script>
+    <script src="/scripts/OrbitControls.js" defer></script>
+    <script src="script.js" defer></script>
 
-    <script src="/scripts/three.min.js"></script>
-    <script src="/scripts/GLTFLoader.js"></script>
-    <script src="/scripts/OrbitControls.js"></script>
-    <script src="script.js"></script>
+  </head>
+
+  <body>
+
+       <!-- Bootstrap Navbar -->
+    <nav class="navbar navbar-expand-lg">
+      <a class="navbar-brand" href="#">My 3D Scene</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                  <a class="nav-link" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">About</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">Contact</a>
+              </li>
+          </ul>
+      </div>
+  </nav>
+
+  <!-- Container for icons -->
+  <div class="icons">
+    <div class="icon left-icon">
+      <img src="chatbot.png" alt="Question Mark">
+    </div>
+    <div class="icon right-icon">
+      <img src="path_to_question_icon.png" alt="ChatBot">
+    </div>
+  </div>
+
+
   </body>
 </html>
+
+
+<!-- todos ->
+    navbar
+    pinch zoom out and zoom in 
+    chatbot (question mark sign for zoom in and out)
+    max and min. zoom set 
+    while model loads shows loading screen-->

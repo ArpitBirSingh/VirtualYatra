@@ -1,0 +1,2 @@
+gttf to dracoGltf
+npm install -g gltf-pipeline
